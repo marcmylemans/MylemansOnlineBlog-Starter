@@ -1,0 +1,46 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+{% seo %}
+
+{% comment %} Noindex thin listing pages so they don't dilute indexing signals {% endcomment %}
+{% assign _noindex_layouts = "tag,tags,category,categories,archives" | split: "," %}
+{% if _noindex_layouts contains page.layout %}
+<meta name="robots" content="noindex, follow">
+{% endif %}
+
+<!-- Theme stylesheet -->
+<link rel="stylesheet" href="{{ '/assets/css/blog.css' | relative_url }}">
+
+<!-- Favicons — replace files in assets/img/favicons/ with your own -->
+<link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/img/favicons/apple-touch-icon.png' | relative_url }}">
+<link rel="icon" type="image/png" sizes="32x32"  href="{{ '/assets/img/favicons/favicon-32x32.png' | relative_url }}">
+<link rel="icon" type="image/png" sizes="16x16"  href="{{ '/assets/img/favicons/favicon-16x16.png' | relative_url }}">
+<link rel="manifest" href="{{ '/assets/img/favicons/site.webmanifest' | relative_url }}">
+<link rel="shortcut icon" href="{{ '/assets/img/favicons/favicon.ico' | relative_url }}">
+<meta name="theme-color" content="{{ site.accent_color | default: '#3b82f6' }}">
+
+<!-- Apply saved theme before render to avoid flash of wrong theme -->
+<script>
+  (function(){
+    var t;
+    try { t = localStorage.getItem('blog-theme'); } catch(e){}
+    if (!t) { t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+
+<!-- Google Analytics — set google_analytics.id in _config.yml to enable -->
+{% if site.google_analytics.id %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics.id }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ site.google_analytics.id }}', { anonymize_ip: true });
+</script>
+{% endif %}
+
+<!-- Structured data (JSON-LD schemas) -->
+{% include metadata-hook.html %}

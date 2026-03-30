@@ -1,0 +1,21 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span>{{ site.title }}</span>
+    </div>
+
+    <!-- Social links from author.links in _config.yml -->
+    {% if site.author.links and site.author.links.size > 0 %}
+    <nav class="footer-links" aria-label="Social links">
+      {% for link in site.author.links %}
+      <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label }}</a>
+      {% endfor %}
+    </nav>
+    {% endif %}
+
+    <p class="footer-copy">
+      &copy; {{ 'now' | date: '%Y' }} {{ site.author.name | default: site.title }} · {{ site.title }}.
+      Built with <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>.
+    </p>
+  </div>
+</footer>

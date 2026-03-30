@@ -1,0 +1,39 @@
+---
+layout: default
+---
+
+<main class="page-main" id="main-content">
+  <header class="archive-header">
+    <h1>Tags</h1>
+    <p>Browse all {{ site.tags.size }} tags across {{ site.posts.size }} posts.</p>
+  </header>
+
+  <!-- Tag cloud -->
+  <div class="tag-cloud" aria-label="Tag cloud">
+    {% assign sorted_tags = site.tags | sort %}
+    {% for tag in sorted_tags %}
+      {% assign tag_name = tag | first %}
+      {% assign tag_posts = tag | last %}
+      <a href="#{{ tag_name | slugify }}" class="tag-chip">
+        {{ tag_name }} <span style="opacity:0.6;">({{ tag_posts.size }})</span>
+      </a>
+    {% endfor %}
+  </div>
+
+  <!-- Posts grouped by tag -->
+  {% for tag in sorted_tags %}
+    {% assign tag_name = tag | first %}
+    {% assign tag_posts = tag | last %}
+    <section id="{{ tag_name | slugify }}" style="margin-bottom:3rem;">
+      <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:1.25rem;padding-bottom:0.5rem;border-bottom:1px solid var(--color-border);">
+        🏷️ {{ tag_name }}
+        <span style="font-size:0.85rem;font-weight:400;color:var(--color-text-muted);">{{ tag_posts.size }} post{% if tag_posts.size != 1 %}s{% endif %}</span>
+      </h2>
+      <div class="archive-grid">
+        {% for post in tag_posts %}
+          {% include post-card.html post=post %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+</main>

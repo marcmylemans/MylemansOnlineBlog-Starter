@@ -1,0 +1,182 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║         Jekyll Blog Starter — _config.yml                   ║
+# ║  Fill in the values marked with  ← CHANGE THIS              ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+# ── Site identity ─────────────────────────────────────────────────────
+title: "My Tech Blog"                        # ← CHANGE THIS
+tagline: "Tips, tutorials and deep dives"    # ← CHANGE THIS
+description: >-                              # ← CHANGE THIS
+  A blog about technology, tutorials, and practical guides.
+
+# Your deployed URL — no trailing slash.
+# GitHub Pages default: https://<username>.github.io
+# Custom domain example: https://blog.example.com
+url: "https://yourusername.github.io"        # ← CHANGE THIS
+baseurl: ""                                  # leave empty unless deploying to a subdirectory
+
+lang: en
+timezone: "Europe/London"                    # ← CHANGE THIS (https://kevinnovak.github.io/Time-Zone-Picker)
+
+
+# ── Author ────────────────────────────────────────────────────────────
+# Used in the nav bar, author bio on posts, footer, and structured data.
+author:
+  name: "Your Name"                          # ← CHANGE THIS
+  bio: >-                                    # ← CHANGE THIS
+    Brief description of who you are and what this blog is about.
+    Keep it to 1–2 sentences.
+  avatar: "/assets/img/avatar.jpg"           # ← CHANGE THIS (place your photo in assets/img/)
+  # Social links shown in the author bio card and footer.
+  # Remove any you don't use; add new ones following the same pattern.
+  links:
+    - label: "GitHub"
+      url: "https://github.com/yourusername"   # ← CHANGE THIS
+    - label: "LinkedIn"
+      url: "https://linkedin.com/in/yourprofile" # ← CHANGE THIS
+    - label: "YouTube"
+      url: "https://youtube.com/@yourchannel"  # ← CHANGE THIS (or remove)
+    - label: "Bluesky"
+      url: "https://bsky.app/profile/you.bsky.social" # ← CHANGE THIS (or remove)
+
+
+# ── SEO (jekyll-seo-tag) ──────────────────────────────────────────────
+social:
+  name: "Your Name"                          # ← same as author.name
+  email: ""                                  # ← CHANGE THIS (optional)
+  links:
+    - "https://github.com/yourusername"      # ← CHANGE THIS
+
+google_site_verification: ""  # Paste your Google Search Console verification string here
+
+# Default OG image for posts that don't have their own image.
+# Place a 1200×630 image at assets/img/default-og.jpg
+default_image: "/assets/img/default-og.jpg"
+
+# Your site's logo / avatar used in the nav bar (same as author.avatar by default)
+avatar: "/assets/img/avatar.jpg"             # ← CHANGE THIS
+
+
+# ── Analytics (optional) ──────────────────────────────────────────────
+google_analytics:
+  id: ""   # ← Paste your GA4 Measurement ID here, e.g. G-XXXXXXXXXX
+           #   Leave empty to disable.
+
+
+# ── Comments — Giscus (optional) ──────────────────────────────────────
+# Giscus uses GitHub Discussions for comments. Free and open source.
+# Set up at https://giscus.app — takes 2 minutes.
+comments:
+  active: ""      # Set to "giscus" to enable. Leave empty to disable.
+  giscus:
+    repo: ""                 # ← "username/repo-name"
+    repo_id: ""              # ← from giscus.app
+    category: "Announcements"
+    category_id: ""          # ← from giscus.app
+    mapping: "pathname"
+    input_position: "top"
+    reactions_enabled: "1"
+    lang: ""                 # leave empty to use site.lang
+
+
+# ── Theme appearance ──────────────────────────────────────────────────
+theme_mode: ""   # Leave empty for system default (dark/light toggle shown)
+                 # Set to "dark" or "light" to force a specific mode.
+
+# Accent colour — used for links, buttons, progress bar, code highlights.
+# Any valid CSS colour works: hex, hsl, rgb.
+accent_color: "#3b82f6"   # ← CHANGE THIS (default: blue)
+
+
+# ── Pagination ────────────────────────────────────────────────────────
+paginate: 10
+paginate_path: "/page:num/"
+
+
+# ── Table of Contents ─────────────────────────────────────────────────
+toc: true   # Set to false to disable TOC on all posts globally.
+            # Can be overridden per-post with `toc: false` in front matter.
+
+
+# ── Post defaults ─────────────────────────────────────────────────────
+# These are sensible defaults — you rarely need to change them.
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      comments: true
+      toc: true
+      permalink: /posts/:title/
+  - scope:
+      path: _drafts
+    values:
+      comments: false
+  - scope:
+      path: ""
+      type: tabs
+    values:
+      layout: page
+      permalink: /:title/
+
+collections:
+  tabs:
+    output: true
+    sort_by: order
+
+
+# ── Archives (categories & tags) ──────────────────────────────────────
+jekyll-archives:
+  enabled: [categories, tags]
+  layouts:
+    category: category
+    tag: tag
+  permalinks:
+    tag: /tags/:name/
+    category: /categories/:name/
+
+
+# ── Plugins ───────────────────────────────────────────────────────────
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-archives
+  - jekyll-redirect-from
+  - jekyll-last-modified-at
+
+
+# ── Markdown & syntax highlighting ────────────────────────────────────
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: highlight
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+
+sass:
+  style: compressed
+
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  profile: false
+  blanklines: false
+  ignore:
+    envs: [development]
+
+exclude:
+  - "*.gem"
+  - "*.gemspec"
+  - docs
+  - tools
+  - README.md
+  - LICENSE
+  - rollup.config.js
+  - package*.json

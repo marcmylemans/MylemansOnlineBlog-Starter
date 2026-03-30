@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}" data-theme="dark">
+<head>
+  {% include head.html %}
+</head>
+<body>
+  <!-- Reading progress bar -->
+  <div id="reading-progress" class="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+  {% include nav.html %}
+
+  <div class="page-wrapper">
+    {{ content }}
+    {% include footer.html %}
+  </div>
+
+  <!-- Back to top button -->
+  <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+
+  <!-- Blog JS -->
+  <script src="{{ '/assets/js/blog.js' | relative_url }}" defer></script>
+</body>
+</html>

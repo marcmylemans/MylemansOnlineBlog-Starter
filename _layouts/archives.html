@@ -1,0 +1,41 @@
+---
+layout: default
+---
+
+<main class="page-main" id="main-content">
+  <header class="archive-header">
+    <h1>Archives</h1>
+    <p>All {{ site.posts.size }} posts, chronologically.</p>
+  </header>
+
+  {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+
+  {% for year_group in posts_by_year %}
+  <section style="margin-bottom:2.5rem;">
+    <h2 id="{{ year_group.name }}" style="font-size:1.5rem;font-weight:800;margin-bottom:1.25rem;padding-bottom:0.5rem;border-bottom:1px solid var(--color-border);">
+      {{ year_group.name }}
+      <span style="font-size:0.9rem;font-weight:400;color:var(--color-text-muted);">{{ year_group.items.size }} posts</span>
+    </h2>
+
+    <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:0.75rem;">
+      {% for post in year_group.items %}
+      <li style="display:flex;align-items:baseline;gap:1rem;padding:0.6rem 0.75rem;border-radius:var(--radius-md);border:1px solid var(--color-border);background:var(--color-surface);transition:border-color 0.15s;"
+          onmouseenter="this.style.borderColor='var(--color-accent)'"
+          onmouseleave="this.style.borderColor='var(--color-border)'">
+        <time style="font-size:0.8rem;color:var(--color-text-muted);flex-shrink:0;width:6rem;"
+              datetime="{{ post.date | date_to_xmlschema }}">
+          {{ post.date | date: "%b %-d, %Y" }}
+        </time>
+        <a href="{{ post.url | relative_url }}"
+           style="color:var(--color-text);font-weight:500;font-size:0.95rem;flex:1;">
+          {{ post.title | escape }}
+        </a>
+        {% if post.categories.size > 0 %}
+        <span class="tag-chip" style="flex-shrink:0;">{{ post.categories | first }}</span>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endfor %}
+</main>

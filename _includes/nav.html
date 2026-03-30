@@ -1,0 +1,42 @@
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+
+    <!-- Brand: uses site.title and author.avatar from _config.yml -->
+    <a class="nav-brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }}">
+      {% if site.avatar %}
+      <img src="{{ site.avatar | relative_url }}"
+           alt="{{ site.author.name | default: site.title }}"
+           width="32" height="32">
+      {% endif %}
+      <span>{{ site.title }}</span>
+    </a>
+
+    <!-- Desktop nav links -->
+    <ul class="nav-links" role="list">
+      <li><a href="{{ '/categories/' | relative_url }}">Categories</a></li>
+      <li><a href="{{ '/tags/' | relative_url }}">Tags</a></li>
+      <li><a href="{{ '/archives/' | relative_url }}">Archives</a></li>
+      <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+    </ul>
+
+    <!-- Actions: theme toggle + hamburger -->
+    <div class="nav-actions">
+      <button class="theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
+        <span class="icon-moon" aria-hidden="true">🌙</span>
+        <span class="icon-sun"  aria-hidden="true">☀️</span>
+      </button>
+      <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        ☰
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile nav drawer -->
+<div class="nav-mobile" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
+  <a href="{{ '/' | relative_url }}">🏠 Home</a>
+  <a href="{{ '/categories/' | relative_url }}">📁 Categories</a>
+  <a href="{{ '/tags/' | relative_url }}">🏷️ Tags</a>
+  <a href="{{ '/archives/' | relative_url }}">📚 Archives</a>
+  <a href="{{ '/about/' | relative_url }}">👤 About</a>
+</div>

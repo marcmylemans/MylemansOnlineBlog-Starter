@@ -1,0 +1,39 @@
+---
+layout: default
+---
+
+<main class="page-main" id="main-content">
+  <header class="archive-header">
+    <h1>Categories</h1>
+    <p>Browse all {{ site.categories.size }} categories across {{ site.posts.size }} posts.</p>
+  </header>
+
+  <!-- Category list with post counts -->
+  <div class="tag-cloud" style="margin-bottom:2.5rem;" aria-label="Category list">
+    {% assign sorted_cats = site.categories | sort %}
+    {% for cat in sorted_cats %}
+      {% assign cat_name = cat | first %}
+      {% assign cat_posts = cat | last %}
+      <a href="#{{ cat_name | slugify }}" class="tag-chip">
+        {{ cat_name }} <span style="opacity:0.6;">({{ cat_posts.size }})</span>
+      </a>
+    {% endfor %}
+  </div>
+
+  <!-- Posts grouped by category -->
+  {% for cat in sorted_cats %}
+    {% assign cat_name = cat | first %}
+    {% assign cat_posts = cat | last %}
+    <section id="{{ cat_name | slugify }}" style="margin-bottom:3rem;">
+      <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:1.25rem;padding-bottom:0.5rem;border-bottom:1px solid var(--color-border);">
+        📁 {{ cat_name }}
+        <span style="font-size:0.85rem;font-weight:400;color:var(--color-text-muted);">{{ cat_posts.size }} post{% if cat_posts.size != 1 %}s{% endif %}</span>
+      </h2>
+      <div class="archive-grid">
+        {% for post in cat_posts %}
+          {% include post-card.html post=post %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+</main>

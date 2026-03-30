@@ -1,0 +1,84 @@
+---
+layout: default
+---
+
+<main class="page-main" id="main-content">
+
+  <!-- Hero header -->
+  <header class="home-hero">
+    <h1 class="home-hero__title">
+      <span>{{ site.tagline | default: site.title }}</span>
+    </h1>
+    <p class="home-hero__tagline">{{ site.description | truncate: 120 }}</p>
+  </header>
+
+  <!-- Featured post (first post on page 1 only) -->
+  {% if paginator.page == 1 %}
+    {% assign featured = paginator.posts | first %}
+    {% if featured %}
+    <a class="featured-post" href="{{ featured.url | relative_url }}">
+      {% if featured.image %}
+      <div class="featured-post__img-wrap">
+        <img class="featured-post__img"
+             src="{{ featured.image }}"
+             alt="{{ featured.title | escape }}"
+             width="1200" height="500"
+             loading="eager">
+      </div>
+      {% endif %}
+      <div class="featured-post__body">
+        <div class="featured-post__meta">
+          {% if featured.categories and featured.categories.size > 0 %}
+            <span class="tag-chip">{{ featured.categories | first }}</span>
+          {% endif %}
+          <time datetime="{{ featured.date | date_to_xmlschema }}">{{ featured.date | date: "%B %-d, %Y" }}</time>
+          <span class="reading-time">
+            {% assign words = featured.content | number_of_words %}
+            {% assign mins = words | divided_by: 200 %}
+            {% if mins < 1 %}1{% else %}{{ mins }}{% endif %} min read
+          </span>
+        </div>
+        <h2 class="featured-post__title">{{ featured.title | escape }}</h2>
+        <p class="featured-post__excerpt">{{ featured.excerpt | strip_html | truncate: 200 }}</p>
+        <span class="featured-post__cta">Read article →</span>
+      </div>
+    </a>
+    {% endif %}
+  {% endif %}
+
+  <!-- Post grid (skip featured post on page 1) -->
+  <div class="archive-grid">
+    {% for post in paginator.posts %}
+      {% if paginator.page == 1 and forloop.first %}{% continue %}{% endif %}
+      {% include post-card.html post=post %}
+    {% endfor %}
+  </div>
+
+  <!-- Pagination -->
+  {% if paginator.total_pages > 1 %}
+  <nav class="pagination" aria-label="Page navigation">
+    {% if paginator.previous_page %}
+      <a href="{{ paginator.previous_page_path | relative_url }}" aria-label="Previous page">&larr; Newer</a>
+    {% else %}
+      <span class="disabled">&larr; Newer</span>
+    {% endif %}
+
+    {% for page in (1..paginator.total_pages) %}
+      {% if page == paginator.page %}
+        <span class="current" aria-current="page">{{ page }}</span>
+      {% elsif page == 1 %}
+        <a href="{{ '/' | relative_url }}">{{ page }}</a>
+      {% else %}
+        <a href="{{ site.paginate_path | relative_url | replace: ':num', page }}">{{ page }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if paginator.next_page %}
+      <a href="{{ paginator.next_page_path | relative_url }}" aria-label="Next page">Older &rarr;</a>
+    {% else %}
+      <span class="disabled">Older &rarr;</span>
+    {% endif %}
+  </nav>
+  {% endif %}
+
+</main>

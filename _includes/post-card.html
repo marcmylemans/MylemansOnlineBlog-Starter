@@ -1,0 +1,46 @@
+{% assign post = include.post %}
+<article class="post-card">
+  {% if post.image %}
+  <a href="{{ post.url | relative_url }}" tabindex="-1" aria-hidden="true">
+    <img class="post-card__image"
+         src="{{ post.image }}"
+         alt="{{ post.title | escape }}"
+         loading="lazy"
+         width="800" height="450">
+  </a>
+  {% endif %}
+
+  <div class="post-card__body">
+    <div class="post-card__meta">
+      <time class="post-card__date" datetime="{{ post.date | date_to_xmlschema }}">
+        {{ post.date | date: "%b %-d, %Y" }}
+      </time>
+      {% if post.categories and post.categories.size > 0 %}
+      <div class="post-card__categories" aria-label="Categories">
+        {% for cat in post.categories limit:2 %}
+        <a href="{{ '/categories/' | relative_url }}#{{ cat | slugify }}" class="tag-chip">{{ cat }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <a href="{{ post.url | relative_url }}" class="post-card__title">
+      {{ post.title | escape }}
+    </a>
+
+    <p class="post-card__excerpt">
+      {{ post.description | default: post.excerpt | strip_html | truncate: 140 }}
+    </p>
+  </div>
+
+  <div class="post-card__footer">
+    <span class="reading-time">
+      {% assign words = post.content | number_of_words %}
+      {% assign mins = words | divided_by: 200 %}
+      {% if mins < 1 %}1{% else %}{{ mins }}{% endif %} min read
+    </span>
+    <a href="{{ post.url | relative_url }}" class="read-more" aria-label="Read {{ post.title }}">
+      Read more
+    </a>
+  </div>
+</article>
