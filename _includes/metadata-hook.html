@@ -1,7 +1,7 @@
 {% comment %}
   metadata-hook.html — structured data (JSON-LD) for SEO rich results.
   All values come from _config.yml — no hardcoding needed.
-  Schemas: Organization · Person · WebSite · TechArticle · BreadcrumbList · HowTo
+  Schemas: Organization · Person · WebSite · TechArticle · BreadcrumbList · HowTo · FAQPage
 {% endcomment %}
 
 <!-- ── Homepage: Organization + Person + WebSite schemas ── -->
@@ -115,6 +115,35 @@
   "step": [{% if page.howto_steps %}{% for step in page.howto_steps %}
     { "@type": "HowToStep", "position": {{ forloop.index }}, "name": {{ step | jsonify }}, "text": {{ step | jsonify }} }{% unless forloop.last %},{% endunless %}{% endfor %}{% else %}
     { "@type": "HowToStep", "position": 1, "name": "Follow the guide", "text": "See the full instructions in the article above." }{% endif %}
+  ]
+}
+</script>
+{% endif %}
+
+{% comment %}
+  FAQPage schema — opt-in via front matter:
+    faq: true
+    faq_items:
+      - question: "How do I …?"
+        answer: "You can … by doing …"
+      - question: "What is …?"
+        answer: "… is a …"
+  Eligible for Google FAQ rich results (collapsed Q&A directly in SERPs).
+{% endcomment %}
+{% if page.faq and page.faq_items %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{% for item in page.faq_items %}
+    {
+      "@type": "Question",
+      "name": {{ item.question | jsonify }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ item.answer | jsonify }}
+      }
+    }{% unless forloop.last %},{% endunless %}{% endfor %}
   ]
 }
 </script>
